@@ -103,6 +103,27 @@ class CPU (private val bus: MemoryBus) {
                 flagC = result < 0
                 a = result and 0xFF
             }
+            0xA0 -> { // AND A, B
+                a = a and b
+                flagZ = a == 0
+                flagN = false
+                flagH = true
+                flagC = false
+            }
+            0xB0 -> { // OR A, B
+                a = a or b
+                flagZ = a == 0
+                flagN = false
+                flagH = false
+                flagC = false
+            }
+            0xA8 -> { // XOR A, B
+                a = a xor b
+                flagZ = a == 0
+                flagN = false
+                flagH = false
+                flagC = false
+            }
             else -> throw Exception("Opcode inconnu: 0x${opcode.toString(16)}")
         }
     }

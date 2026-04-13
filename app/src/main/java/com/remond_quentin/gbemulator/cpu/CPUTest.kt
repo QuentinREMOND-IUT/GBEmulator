@@ -79,3 +79,30 @@ fun testSUB() {
 
     println("Test SUB réussi !")
 }
+
+fun testAND() {
+    val bus = MemoryBus()
+    val cpu = CPU(bus)
+
+    // LD A, 0b11001100
+    bus.writeByte(0x0000, 0x3E)
+    bus.writeByte(0x0001, 0b11001100)
+
+    // LD B, 0b10101010
+    bus.writeByte(0x0002, 0x06)
+    bus.writeByte(0x0003, 0b10101010)
+
+    // AND A, B
+    bus.writeByte(0x0004, 0xA0)
+
+    cpu.step()
+    cpu.step()
+    cpu.step()
+
+    // 0b11001100 AND 0b10101010, sur 8 bits = 0b10001000
+    assert(cpu.a == 0b10001000) { "A devrait être 0b10001000, mais vaut ${cpu.a}" }
+    assert(!cpu.flagZ) { "flagZ devrait être false" }
+    assert(cpu.flagH) { "flagH devrait être true" }
+
+    println("Test AND réussi !")
+}
