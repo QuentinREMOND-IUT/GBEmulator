@@ -55,4 +55,23 @@ class CPU (private val bus: MemoryBus) {
         pc++
         return opcode
     }
+
+    fun step() {
+        val opcode = fetch()
+        execute(opcode)
+    }
+
+    fun execute(opcode: Int) {
+        when (opcode) {
+            0x00 -> { } // NOP - ne fait rien
+            0x3E -> { a = fetch() } // LD A, n - charge une valeur dans A
+            0x06 -> { b = fetch() } // LD B, n - charge une valeur dans B
+            0x0E -> { c = fetch() } // LD C, n - charge une valeur dans C
+            0x16 -> { d = fetch() } // LD D, n - charge une valeur dans D
+            0x1E -> { e = fetch() } // LD E, n - charge une valeur dans E
+            0x26 -> { h = fetch() } // LD H, n - charge une valeur dans H
+            0x2E -> { l = fetch() } // LD L, n - charge une valeur dans L
+            else -> throw Exception("Opcode inconnu: 0x${opcode.toString(16)}")
+        }
+    }
 }
