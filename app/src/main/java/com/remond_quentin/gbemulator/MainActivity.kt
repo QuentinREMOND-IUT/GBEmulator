@@ -12,9 +12,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.remond_quentin.gbemulator.cpu.testADD
+import com.remond_quentin.gbemulator.cpu.testAND
 import com.remond_quentin.gbemulator.ui.theme.GBEmulatorTheme
 import com.remond_quentin.gbemulator.cpu.testCPU
+import com.remond_quentin.gbemulator.cpu.testOR
 import com.remond_quentin.gbemulator.cpu.testSUB
+import com.remond_quentin.gbemulator.cpu.testXOR
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,6 +25,9 @@ class MainActivity : ComponentActivity() {
         testCPU()
         testADD()
         testSUB()
+        testAND()
+        testOR()
+        testXOR()
         enableEdgeToEdge()
         setContent {
             GBEmulatorTheme {

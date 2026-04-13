@@ -106,3 +106,55 @@ fun testAND() {
 
     println("Test AND réussi !")
 }
+
+fun testOR() {
+    val bus = MemoryBus()
+    val cpu = CPU(bus)
+
+    // LD A, 0b11001100
+    bus.writeByte(0x0000, 0x3E)
+    bus.writeByte(0x0001, 0b11001100)
+
+    // LD B, 0b10101010
+    bus.writeByte(0x0002, 0x06)
+    bus.writeByte(0x0003, 0b10101010)
+
+    // OR A, B
+    bus.writeByte(0x0004, 0xB0)
+
+    cpu.step()
+    cpu.step()
+    cpu.step()
+
+    // 0b11001100 OR 0b10101010, sur 8 bits = 0b11101110
+    assert(cpu.a == 0b11101110) { "A devrait être 0b11101110, mais vaut ${cpu.a}" }
+    assert(!cpu.flagZ) { "flagZ devrait être false" }
+
+    println("Test OR réussi !")
+}
+
+fun testXOR() {
+    val bus = MemoryBus()
+    val cpu = CPU(bus)
+
+    // LD A, 0b11001100
+    bus.writeByte(0x0000, 0x3E)
+    bus.writeByte(0x0001, 0b11001100)
+
+    // LD B, 0b10101010
+    bus.writeByte(0x0002, 0x06)
+    bus.writeByte(0x0003, 0b10101010)
+
+    // XOR A, B
+    bus.writeByte(0x0004, 0xA8)
+
+    cpu.step()
+    cpu.step()
+    cpu.step()
+
+    // 0b11001100 XOR 0b10101010, sur 8 bits = 0b01100110
+    assert(cpu.a == 0b01100110) { "A devrait être 0b01100110, mais vaut ${cpu.a}" }
+    assert(!cpu.flagZ) { "flagZ devrait être false" }
+
+    println("Test XOR réussi !")
+}
