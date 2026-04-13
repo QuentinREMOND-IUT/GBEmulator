@@ -14,11 +14,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.remond_quentin.gbemulator.cpu.testADD
 import com.remond_quentin.gbemulator.ui.theme.GBEmulatorTheme
 import com.remond_quentin.gbemulator.cpu.testCPU
+import com.remond_quentin.gbemulator.cpu.testSUB
+
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         testCPU()
         testADD()
+        testSUB()
         enableEdgeToEdge()
         setContent {
             GBEmulatorTheme {

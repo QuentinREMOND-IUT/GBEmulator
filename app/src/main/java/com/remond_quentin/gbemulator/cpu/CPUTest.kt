@@ -52,3 +52,30 @@ fun testADD() {
 
     println("Test ADD réussi !")
 }
+
+fun testSUB() {
+    val bus = MemoryBus()
+    val cpu = CPU(bus)
+
+    // LD A, 5
+    bus.writeByte(0x0000, 0x3E)
+    bus.writeByte(0x0001, 5)
+
+    // LD B, 10
+    bus.writeByte(0x0002, 0x06)
+    bus.writeByte(0x0003, 10)
+
+    // SUB A, B
+    bus.writeByte(0x0004, 0x90)
+
+    cpu.step()
+    cpu.step()
+    cpu.step()
+
+    // 5 - 10 = -5, sur 8 bits = 251
+    assert(cpu.a == 251) { "A devrait être 251, mais vaut ${cpu.a}" }
+    assert(cpu.flagC) { "flagC devrait être true (débordement)" }
+    assert(cpu.flagN) { "flagN devrait être true (soustraction)" }
+
+    println("Test SUB réussi !")
+}

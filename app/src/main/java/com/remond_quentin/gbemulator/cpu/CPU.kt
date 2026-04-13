@@ -87,6 +87,22 @@ class CPU (private val bus: MemoryBus) {
                 flagC = result > 0xFF
                 a = result and 0xFF
             }
+            0x90 -> { // SUB A, B
+                val result = a - b
+                flagZ = (result and 0xFF) == 0
+                flagN = true
+                flagH = (a and 0xF) < (b and 0xF)
+                flagC = result < 0
+                a = result and 0xFF
+            }
+            0x91 -> { // SUB A, C
+                val result = a - c
+                flagZ = (result and 0xFF) == 0
+                flagN = true
+                flagH = (a and 0xF) < (c and 0xF)
+                flagC = result < 0
+                a = result and 0xFF
+            }
             else -> throw Exception("Opcode inconnu: 0x${opcode.toString(16)}")
         }
     }
