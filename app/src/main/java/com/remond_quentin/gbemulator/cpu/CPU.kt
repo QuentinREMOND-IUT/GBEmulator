@@ -71,6 +71,22 @@ class CPU (private val bus: MemoryBus) {
             0x1E -> { e = fetch() } // LD E, n - charge une valeur dans E
             0x26 -> { h = fetch() } // LD H, n - charge une valeur dans H
             0x2E -> { l = fetch() } // LD L, n - charge une valeur dans L
+            0x80 -> { // ADD A, B
+                val result = a + b
+                flagZ = (result and 0xFF) == 0
+                flagN = false
+                flagH = (a and 0xF) + (b and 0xF) > 0xF
+                flagC = result > 0xFF
+                a = result and 0xFF
+            }
+            0x81 -> { // ADD A, C
+                val result = a + c
+                flagZ = (result and 0xFF) == 0
+                flagN = false
+                flagH = (a and 0xF) + (c and 0xF) > 0xF
+                flagC = result > 0xFF
+                a = result and 0xFF
+            }
             else -> throw Exception("Opcode inconnu: 0x${opcode.toString(16)}")
         }
     }
